@@ -93,6 +93,32 @@ public class ReviewServiceTest {
     }
 
     @Test
+    void approvalSuccessfulFinalReviewNotApproved() {
+        // given
+        Review review = TestFixtures.getReviewFixtures().getFirst().toBuilder()
+                .approvalCount(1)
+                .approved(false)
+                .build();
+        User user = TestFixtures.getUserFixtures().getLast();
+        assertNotNull(user.getId());
+        when(userDataService.getById(user.getId())).thenReturn(user);
+        assertNotNull(review.getId());
+        when(reviewDataService.getById(review.getId())).thenReturn(review);
+        when(reviewDataService.upsert(any(Review.class))).thenAnswer(invocation -> invocation.getArgument(0));
+
+        // when
+        Review approvedReview = reviewService.approve(review, user.getId());
+
+        // then
+        verify(userDataService).getById(user.getId());
+        verify(reviewDataService).getById(review.getId());
+        verify(reviewDataService).upsert(any(Review.class));
+        assertThat(approvedReview.approvalCount()).isEqualTo(review.approvalCount() + 1);
+        assertThat(approvedReview.approved()).isFalse();
+
+    }
+
+    @Test
     void getApprovedByPos() {
         // given
         Pos pos = TestFixtures.getPosFixtures().getFirst();
