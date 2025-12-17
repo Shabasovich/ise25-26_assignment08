@@ -1,4 +1,5 @@
 package de.seuhd.campuscoffee.domain.implementation;
+import de.seuhd.campuscoffee.domain.ports.data.CrudDataService;
 import org.junit.jupiter.api.Test;
 import de.seuhd.campuscoffee.domain.configuration.ApprovalConfiguration;
 import de.seuhd.campuscoffee.domain.exceptions.NotFoundException;
@@ -13,6 +14,7 @@ import de.seuhd.campuscoffee.domain.tests.TestFixtures;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
@@ -27,16 +29,24 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.*;
 
-
+@ExtendWith(MockitoExtension.class)
 public class CrudServiceTest {
+    @Mock
+    private PosDataService posDataService; // Mocking PosDataService for testing because CrudServiceImpl is abstract
+
+    @InjectMocks
+    private PosServiceImpl posService;
+
+
     @Test
     void test_clear() {
-        //TODO implement test
-        //Written by me
+        posService.clear();
+        verify(posDataService).clear();
     }
     @Test
     void test_delete() {
-        //TODO implement test
-        //Written by me
+        Long id = 1L;
+        posService.delete(id);
+        verify(posDataService).delete(id);
     }
 }
