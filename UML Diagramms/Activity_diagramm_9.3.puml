@@ -1,0 +1,23 @@
+@startuml
+start
+
+repeat
+  :open search view;
+  repeat
+    :open extended filter;
+    :confirm filter;
+    :System searches for POS;
+    if (matching results found?) then (yes)
+      :rank POS;
+      :recommend POS;
+      if (navigate to recommended POS?) then (yes)
+        :open POS detail view and route;
+        stop
+      else (no)
+      endif
+    else (no)
+    endif
+  repeat while (adjust filter?) is (yes)
+  ->no;
+repeat while (redirecting to search view)
+@enduml

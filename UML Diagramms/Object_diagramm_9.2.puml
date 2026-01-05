@@ -1,0 +1,60 @@
+@startuml
+'https://plantuml.com/object-diagram
+object Pos {
+     + id= 4
+     + createdAt=2025-12-27T10:15:30
+     + updatedAt=2025-12-28T10:15:30
+     + name= "New coffe"
+     + description="Great croissants"
+     + type="CAFE"
+     + campus="ALTSTADT"
+     + street="Hauptstraße"
+     + houseNumber= "95"
+     + postalCode= 69117
+     + city= Heidelberg
+}
+object "u1 : User" as user1{
+    + id = 1
+    + loginName= "bob"
+    + firstName= "Bob"
+    + lastName= "Müller"
+}
+object "u2 : User" as user2{
+    + id = 2
+    + loginName= "cat"
+    + firstName= "Alice"
+    + lastName= "Müller"
+}
+object "u3 : User" as user3{
+    + id = 3
+    + loginName= "mallory123"
+    + firstName= "Mallory"
+    + lastName= "Schneider"
+}
+object "u4 : User" as user4{
+    + id = 4
+    + loginName= "anonym"
+    + firstName= "James"
+    + lastName= "Schmidt"
+}
+object Review{
+    + id: 2
+    + createdAt:2025-12-27T10:15:30
+    + updatedAt=2025-12-27T10:15:30
+    + review= "Great place!"
+    + approvalCount= 3
+    + approved= true
+
+    }
+object OSMNode{
+    + nodeId=4
+   }
+
+
+    Review --> user4: author
+    Review --> Pos: assignedTo
+    user1 --> Review: approvedReview
+    user2 --> Review: approvedReview
+    user3 --> Review: approvedReview
+    Pos --> OSMNode: imported
+@enduml

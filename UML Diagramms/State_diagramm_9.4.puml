@@ -1,0 +1,25 @@
+@startuml
+'https://plantuml.com/state-diagram
+
+scale 350 width
+[*] --> Draft
+state Draft {
+  Draft --> Pending_approval : relesed by user
+}
+
+state Pending_approval{
+    Pending_approval --> Pending_approval: increaseApprovalCount[count<3]
+    Pending_approval --> Approved: increaseApprovalCount[count>=3]
+}
+state Approved{
+Approved --> Rejected: reject by admin
+}
+state Rejected{
+}
+
+Draft --> [*]: deleted
+Pending_approval --> [*]: deleted
+Approved --> [*]: deleted
+Rejected --> [*]: deleted
+
+@enduml
